@@ -2,10 +2,11 @@
 import java.awt.GraphicsEnvironment;
 import java.awt.GraphicsDevice;
 
+//keep track of moving the water line
 int[] cycle = {0,0,0,0,0,0};
 
 //rightmost(bottom) x coord of section rounded
-int full_width = 8160;
+int full_width = 8160; //width of screen at leeds
 int[] x_init = {full_width/2, round(full_width/3) - 10, round(full_width/6) - 10, round(2*full_width/3) - 10, round(5*full_width/6) - 10, full_width, 0};
 int[] x = {full_width/2, round(full_width/3) - 10, round(full_width/6) - 10, round(2*full_width/3) - 10, round(5*full_width/6) - 10, full_width};
 //background and rain colors of the six screens
@@ -27,6 +28,7 @@ color color5_2 = new_color();
 color color6_1 = new_color();
 color color6_2 = new_color();
 
+//class to hold the individual rain drops
 class rain_drops{
   float x_rain;
   float y;
@@ -35,13 +37,13 @@ class rain_drops{
     y = random(750);
     x_rain = random(8160);
   }
-  
+  //move the drops
   void rain(float speed){
     x_rain += speed;
   }
 }
   
-
+//rain drops array
 rain_drops drops[] = new rain_drops[200];
 
 //place the display in the top left corner of the second display
@@ -74,8 +76,10 @@ void positionDisplay() {
   surface.setLocation(smallWidth, 0);
 }
 
+//setup screen and make rain drops
 void setup() {
   positionDisplay();
+  fullScreen();
   for(int i = 0; i < 200; i++){
     drops[i] = new rain_drops();
   }
@@ -86,12 +90,12 @@ void draw() {
   setBackground(x);  //set background as starter colors
   
   //screen1 - rec3
+  //the wave shifts every 3 loops
   if(cycle[0] < 3){
     waves(x[0], color1_1, color1_2);
     if(cycle[0] == 0){
       x[0] -=60;
     }
-    
     cycle[0]++;
   }
   else if(cycle[0] > 2 && cycle[0] < 5){
@@ -105,14 +109,15 @@ void draw() {
     cycle[0] = 0;
     waves2(x[0], color1_1, color1_2);
   }
+  //when the water level gets to the top make water color background, choose new color
   if(x[0] <= width/3 + 10){
     x[0] = x_init[0];
     color1_1 = color1_2;
     color1_2 = new_color();
   }
   
-  
   //screen2 - rec2
+  //moves every 2 loops
   if(cycle[1] < 2){
     waves(x[1], color2_1, color2_2);
     if(cycle[1] == 0){
@@ -236,14 +241,13 @@ void draw() {
   }
   
   delay(50);
-  
+  //move rain drops
   rainfall();
   
   delay(50);
 }
 
-//before setup make struct and populate with a number of drops with random spots on the screen, make function to tell what color they should be
-//draw them each time in the right color
+//draw them each time in the right color depending on which screen they're on
 void rainfall(){
    for(int i = 0; i < 200; i++){
      drops[i].rain(random(80));
@@ -284,16 +288,15 @@ void rainfall(){
 }
 
 
-
+//make random new color that is a shade of blue/pink/purple/yellowish
 color new_color(){
   color new_color = color(random(150), random(100), random(100, 255));
   return new_color;
 }
 
-
+//use a series of bezier curves to emulate water level ripple
 void waves(int x_coord, color col1, color col2){
-  
-    //convex?? who knows
+
     fill(col2);
     stroke(col2);
     beginShape();
@@ -351,8 +354,8 @@ void waves(int x_coord, color col1, color col2){
     endShape();
 }
 
+//another series of bezier curves to make water look like it's moving left-right as well as up
 void waves2(int x_coord, color col1, color col2){
-  //reorganize them so only two fill statements, add color to args
     fill(col1);
     stroke(col2);
     
@@ -409,8 +412,6 @@ void waves2(int x_coord, color col1, color col2){
     vertex(x_coord, height*.9);
     bezierVertex(x_coord-10, height*.9, x_coord-10, height, x_coord, height);
     endShape();
-    
-    //x_coord += 10;
 }
 
 //set background
