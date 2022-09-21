@@ -1,0 +1,6 @@
+This code is made for a room that has six equally sized, connected screen, rotated projectors, in no particular order, able to be used on different
+sized screens by changing a few variables. To run the code, make sure full_width is the width of the total screen in pixels, the positionDisplay()
+function may need to be edited/changed depending on how the screens are connected to each other. Also, to look like rain as I intended the projectors 
+should be rotated so that left to right on the computer becomes top to bottom on each screen. Once that is set, or the code is on the computer in CCAM
+101 as it was designed for, all that is needed to get the code to work is to start the program. There should be starting colors that shift and change
+randomly and differently each time. 
