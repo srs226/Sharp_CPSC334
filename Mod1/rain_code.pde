@@ -5,7 +5,7 @@ import java.awt.GraphicsDevice;
 int[] cycle = {0,0,0,0,0,0};
 
 //rightmost(bottom) x coord of section rounded
-int full_width = 8160
+int full_width = 8160;
 int[] x_init = {full_width/2, round(full_width/3) - 10, round(full_width/6) - 10, round(2*full_width/3) - 10, round(5*full_width/6) - 10, full_width, 0};
 int[] x = {full_width/2, round(full_width/3) - 10, round(full_width/6) - 10, round(2*full_width/3) - 10, round(5*full_width/6) - 10, full_width};
 //background and rain colors of the six screens
@@ -32,8 +32,8 @@ class rain_drops{
   float y;
   
   rain_drops(){
-    y = random(400);
-    x_rain = x[int(random(6))];
+    y = random(750);
+    x_rain = random(8160);
   }
   
   void rain(float speed){
@@ -89,7 +89,7 @@ void draw() {
   if(cycle[0] < 3){
     waves(x[0], color1_1, color1_2);
     if(cycle[0] == 0){
-      x[0] -=30;
+      x[0] -=60;
     }
     
     cycle[0]++;
@@ -97,7 +97,7 @@ void draw() {
   else if(cycle[0] > 2 && cycle[0] < 5){
     waves2(x[0], color1_1, color1_2);
     if(cycle[0] == 3){
-      x[0] -=30;
+      x[0] -=60;
     }
     cycle[0]++;
   }
@@ -116,14 +116,14 @@ void draw() {
   if(cycle[1] < 2){
     waves(x[1], color2_1, color2_2);
     if(cycle[1] == 0){
-      x[1] -= 20;
+      x[1] -= 80;
     }
     cycle[1]++;    
   }
   else if(cycle[1] > 1 && cycle[1] < 3){
     waves2(x[1], color2_1, color2_2);
     if(cycle[1] == 2){
-      x[1] -= 20;
+      x[1] -= 80;
     }
     cycle[1]++;
   }
@@ -141,14 +141,14 @@ void draw() {
   if(cycle[2] < 5) {
     waves(x[2], color3_1, color3_2);
     if(cycle[2] == 0){
-      x[2] -= 50;
+      x[2] -= 70;
     }
     cycle[2]++;
   }
   else if(cycle[2] > 4 && cycle[2] < 10){
     waves2(x[2], color3_1, color3_2);
     if(cycle[2] == 5){
-      x[2] -= 50;
+      x[2] -= 70;
     }
     cycle[2]++;
   }
@@ -167,12 +167,12 @@ void draw() {
   //screen4 - rec6
   if(cycle[5] == 0) {
     waves(x[5], color6_1, color6_2);
-    x[5] -= 10;
+    x[5] -= 20;
     cycle[5]++;
   }
   else if(cycle[5] == 1) {
     waves2(x[5], color6_1, color6_2);
-    x[5] -= 10;
+    x[5] -= 20;
     cycle[5]--;
   }
   if(x[5] <= width*.83333 +10) {
@@ -187,14 +187,14 @@ void draw() {
   if(cycle[4] < 6) {
     waves(x[4], color5_1, color5_2);
     if(cycle[4] == 0){
-      x[4] -= 60;
+      x[4] -= 10;
     }
     cycle[4]++;
   }
   else if(cycle[4] > 5 && cycle[4] < 12) {
     waves2(x[4], color5_1, color5_2);
     if(cycle[4] == 6){
-      x[4] -= 60;
+      x[4] -= 10;
     }
     cycle[4]++;
   }
@@ -213,14 +213,14 @@ void draw() {
   if(cycle[3] < 4) {
     waves(x[3], color4_1, color4_2);
     if(cycle[3] == 0){
-      x[3] -= 40;
+      x[3] -= 30;
     }
     cycle[3]++;
   }
   else if(cycle[3] > 3 && cycle[3] < 8) {
     waves2(x[3], color4_1, color4_2);
     if(cycle[3] == 4){
-      x[3] -= 40;
+      x[3] -= 30;
     }
     cycle[3]++;
   }
@@ -235,50 +235,50 @@ void draw() {
     color4_2 = new_color();
   }
   
-  delay(500);
+  delay(50);
   
   rainfall();
   
-  delay(500);
+  delay(50);
 }
 
 //before setup make struct and populate with a number of drops with random spots on the screen, make function to tell what color they should be
 //draw them each time in the right color
 void rainfall(){
    for(int i = 0; i < 200; i++){
-     drops[i].rain(random(40));
+     drops[i].rain(random(80));
      if(drops[i].x_rain > width){
        drops[i].x_rain = drops[i].x_rain - width;
      }
      if(drops[i].x_rain <= x_init[2]){
        fill(color3_2);
        stroke(color3_2);
-       rect(drops[i].x_rain, drops[i].y, 2, 2);
+       rect(drops[i].x_rain, drops[i].y, 20, 20);
      }
      else if(drops[i].x_rain <= x_init[1] && drops[i].x_rain > x_init[2]){
        fill(color2_2);
        stroke(color2_2);
-       rect(drops[i].x_rain, drops[i].y, 2, 2);
+       rect(drops[i].x_rain, drops[i].y, 20, 20);
      }
      else if(drops[i].x_rain <= x_init[0] && drops[i].x_rain > x_init[1]){
        fill(color1_2);
        stroke(color1_2);
-       rect(drops[i].x_rain, drops[i].y, 2, 2);
+       rect(drops[i].x_rain, drops[i].y, 20, 20);
      }
      else if(drops[i].x_rain <= x_init[3] && drops[i].x_rain > x_init[2]){
        fill(color4_2);
        stroke(color4_2);
-       rect(drops[i].x_rain, drops[i].y, 2, 2);
+       rect(drops[i].x_rain, drops[i].y, 20, 20);
      }
      else if(drops[i].x_rain <= x_init[4] && drops[i].x_rain > x_init[3]){
        fill(color5_2);
        stroke(color5_2);
-       rect(drops[i].x_rain, drops[i].y, 2, 2);
+       rect(drops[i].x_rain, drops[i].y, 20, 20);
      }
      else{
        fill(color6_2);
        stroke(color6_2);
-       rect(drops[i].x_rain, drops[i].y, 2, 2);
+       rect(drops[i].x_rain, drops[i].y, 20, 20);
      }
    }
 }
@@ -286,7 +286,7 @@ void rainfall(){
 
 
 color new_color(){
-  color new_color = color(random(100, 255), random(55, 120), random(100, 255));
+  color new_color = color(random(150), random(100), random(100, 255));
   return new_color;
 }
 
