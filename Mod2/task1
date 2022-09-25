@@ -1,0 +1,51 @@
+import RPi.GPIO as GPIO
+import time
+
+button = 11
+switch = 13
+joy_button = 15
+
+GPIO.setmode(GPIO.BOARD)
+GPIO.setwarnings(False)
+GPIO.setup(button, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+GPIO.setup(switch, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+GPIO.setup(joy_button, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+
+message = 0
+mess_state = GPIO.input(switch)
+state = 0
+state1 = 0
+
+greet = ["Hello", "Hola", "Howdy"]
+farewell = ["Goodbye", "Adios", "See ya"]
+
+def button_call(channel):
+        begin = time.time()
+        global mess_state, message
+        if begin - time.time() < .2:
+                if mess_state:
+                        print(greet[message])
+                else:
+                        print(farewell[message])
+
+def joy_button_call(channel):
+        time.sleep(.1)
+        global message
+        if not GPIO.input(channel):
+                message = (message + 1) % 3
+
+def switch_call(channel):
+        global mess_state
+        mess_state = GPIO.input(channel)
+        if mess_state:
+                print("Greetings...")
+        else:
+                print("Farewells...")
+
+GPIO.add_event_detect(button, GPIO.FALLING,callback=button_call, bouncetime=100)
+GPIO.add_event_detect(joy_button, GPIO.RISING,callback=joy_button_call, bouncetime=100)
+GPIO.add_event_detect(switch, GPIO.BOTH,callback=switch_call, bouncetime=25)
+message = input("press enter to quit\n")
+
+GPIO.cleanup()
+
