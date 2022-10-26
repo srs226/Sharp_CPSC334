@@ -1,6 +1,6 @@
 import socket
 
-HOST = "172.29.24.126"
+HOST = "172.29.128.95"
 
 PORT = 8092
 
@@ -9,8 +9,23 @@ BUFFER_SIZE = 1024
 s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 
 s.bind((HOST, PORT))
+
+import RPi.GPIO as GPIO
+import time
+
+GPIO.setmode(GPIO.BCM)
+GPIO.setup(4,GPIO.IN)
+
+#initialise a previous input variable to 0 (Assume no pressure applied)
+prev_input = 0
 while True:
-	data, addy = s.recvfrom(BUFFER_SIZE)
-	if data:
-		print("Client to server: ", data.decode("ASCII"))
-s.close()
+       	#take a reading
+	input = GPIO.input(4)
+       	#if the last reading was low and this one high, alert us
+	if ((not prev_input) and input):
+		print("Under Pressure")
+		s.send(b'1')
+       	#update previous input
+	prev_input = input
+       	#slight pause
+	time.sleep(0.10)
