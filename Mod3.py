@@ -13,19 +13,34 @@ s.bind((HOST, PORT))
 import RPi.GPIO as GPIO
 import time
 
-GPIO.setmode(GPIO.BCM)
-GPIO.setup(4,GPIO.IN)
+GPIO.setmode(GPIO.BOARD)
 
-#initialise a previous input variable to 0 (Assume no pressure applied)
+GPIO.setup(7,GPIO.IN)
+
 prev_input = 0
+
 while True:
-       	#take a reading
-	input = GPIO.input(4)
-       	#if the last reading was low and this one high, alert us
+	#take a reading
+	input = GPIO.input(7)
+	#if the last reading was low and this one high, alert us
 	if ((not prev_input) and input):
 		print("Under Pressure")
-		s.send(b'1')
-       	#update previous input
+	#update previous input
 	prev_input = input
-       	#slight pause
-	time.sleep(0.10)
+	#slight pause
+	time.sleep(0.05)
+
+
+
+button = 7
+GPIO.setmode(GPIO.BOARD)
+GPIO.setwarnings(False)
+GPIO.setup(button,GPIO.IN,pull_up_down=GPIO.PUD_DOWN)
+
+def button_call(channel):
+	begin = time.time()
+	if begin - time.time() < .2:
+		s.send(b'1')
+
+GPIO.add_event_detect(button,GPIO.FALLING,callback=button_call,bouncetime=100)
+
