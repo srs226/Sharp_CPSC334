@@ -31,7 +31,7 @@ while True:
 	#if the last reading was low and this one high, alert us
 	if ((not prev_input) and input):
 		print("Under Pressure")
-		s.sendto(b'1',(HOST, PORT))
+		s.sendto(b'1', (HOST, PORT))
 	#update previous input
 	prev_input = input
 	#slight pause
