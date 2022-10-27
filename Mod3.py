@@ -6,8 +6,7 @@ PORT = 8092
 
 BUFFER_SIZE = 1024
 
-s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-#DGRAM)
+s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 
 s.bind((HOST, PORT))
 
@@ -22,9 +21,10 @@ prev_input = 0
 
 message = True
 
-#while message:
-#	data, addy = s.recvfrom(8092)
-#	message = False
+while message:
+	data, addy = s.recvfrom(8092)
+	message = False
+	print(addy)
 
 while True:
 	#take a reading
@@ -32,7 +32,7 @@ while True:
 	#if the last reading was low and this one high, alert us
 	if ((not prev_input) and input):
 		print("Under Pressure")
-		s.sendto(b'1',(HOST, PORT))
+		s.sendto(b'1', addy)
 	#update previous input
 	prev_input = input
 	#slight pause
