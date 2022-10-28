@@ -1,0 +1,12 @@
+This is the code for my piano breifcase project. To get the breifcase to function, run the python code on 
+the Raspberry pi and then load the esp code/turn the esp(breifcase) on. Everytime you turn off the 
+briefcase you must rerun the python code on the pi before turning the breifcase on if you'd like
+the press sensor to change the functionality of the piano (usage explained below). If the python
+code is not run first the piano will still work but with fewer features.
+
+Usage:
+
+Start up the pi and run the code. Then turn of the breifcase using the switch and that's it!
+To make music touch the nails, those are the keys of the piano. The brightness of the LEDs will
+change intensity as you play, and to change the color and set of notes you have hit the "Hit Me!"
+pad connected to the box (with the Pi). 
