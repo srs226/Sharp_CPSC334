@@ -1,6 +1,6 @@
 import socket
 
-HOST = "172.29.128.95"
+HOST = "172.29.24.126"
 
 PORT = 8092
 
