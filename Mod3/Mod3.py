@@ -2,14 +2,14 @@ import socket
 import RPi.GPIO as GPIO
 import time
 
-<<<<<<< HEAD:Mod3.py
-HOST = "172.29.128.95"
+#<<<<<<< HEAD:Mod3.py
+#HOST = "172.29.128.95"
 
-=======
+#=======
 #initialize variables for socket
 HOST = "172.29.24.126"
->>>>>>> b52ca505b0406afe1ba3ed7eff80bdfe722391c1:Mod3/Mod3.py
-PORT = 8092
+#>>>>>>> b52ca505b0406afe1ba3ed7eff80bdfe722391c1:Mod3/Mod3.py
+PORT = 8000
 s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 s.bind((HOST, PORT))
 
